@@ -29,6 +29,6 @@
     "@quramy/prisma-fabbrica": "^2.0.2",
     "prisma": "^5.6.0",
     "ts-node": "^10.9.1",
-    "tsx": "^3.12.2"
+    "tsx": "^4.0.0"
   }
 }
