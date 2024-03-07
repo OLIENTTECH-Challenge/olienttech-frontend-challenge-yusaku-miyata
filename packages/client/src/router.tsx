@@ -1,5 +1,5 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { manufacturerAuthLoader } from './loader';
+import { manufacturerAuthLoader, shopAuthLoader } from './loader';
 import HomePage from './pages';
 import ManufacturerLoginPage from './pages/manufacturer/login';
 import ManufacturerProductListPage from './pages/manufacturer/products';
@@ -8,6 +8,7 @@ import ManufacturerLayout from './pages/manufacturer/layout';
 import ManufacturerOrderListPage from './pages/manufacturer/orders';
 import ManufacturerOrderPage from './pages/manufacturer/order';
 import ShopLayout from './pages/shop/layout';
+import ShopLoginPage from './pages/shop/login';
 import ShopHomePage from './pages/shop';
 
 const router = createBrowserRouter([
@@ -27,7 +28,10 @@ const router = createBrowserRouter([
   },
   {
     element: <ShopLayout />,
-    children: [{ path: '/shop', element: <ShopHomePage /> }],
+    children: [
+      { path: '/shop', element: <ShopHomePage />, loader: shopAuthLoader },
+      { path: '/shop/login', element: <ShopLoginPage /> },
+    ],
   },
 ]);
 
