@@ -166,7 +166,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/Users/yutaohira/work/olienttech/gx-task/packages/server/src/__generated__/prisma-client-js",
+      "value": "/home/pkmiya/gx-frontend-challenges/packages/server/src/__generated__/prisma-client-js",
       "fromEnvVar": null
     },
     "config": {
@@ -175,7 +175,7 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "darwin-arm64",
+        "value": "debian-openssl-3.0.x",
         "native": true
       }
     ],
