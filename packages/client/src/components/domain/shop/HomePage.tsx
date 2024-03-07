@@ -1,3 +1,4 @@
+import { LinkCard } from '@/components/base/LinkCard';
 import styles from './HomePage.module.css';
 import { useAuthLoaderData } from '@/hooks/useAuthLoaderData';
 import { useEffect, useState } from 'react';
@@ -45,10 +46,12 @@ export const ShopHomePage = () => {
           </div>
         )}
         <div className={styles.linkList}>
-          {
-            // to-do
-            // main app
-          }
+          <LinkCard
+            title='製造会社一覧'
+            description='取引可能な製造会社を表示します'
+            href='/shop/manufacturers'
+            className={styles.linkCard}
+          />
         </div>
       </div>
     </>
