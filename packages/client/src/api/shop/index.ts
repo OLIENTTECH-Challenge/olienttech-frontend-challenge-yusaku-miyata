@@ -63,3 +63,34 @@ export const fetchShop = async (req: FetchShopRequest) => {
   const json = (await res.json()) as SuccessResponse<FetchShopResponse>;
   return json.data;
 };
+
+type FetchPartnerManufacturersRequest = {
+  shopId: string;
+  token: string;
+};
+
+type FetchPartnerManufacturersResponse = {
+  id: string;
+  name: string;
+  description: string;
+}[];
+
+export const fetchPartnerManufacturers = async (
+  req: FetchPartnerManufacturersRequest,
+): Promise<FetchPartnerManufacturersResponse> => {
+  const { shopId, token } = req;
+
+  const res = await fetch(`${APP_API_URL}/shops/${shopId}/partner-manufacturers`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!res.ok) {
+    throw new Error();
+  }
+  const json = (await res.json()) as SuccessResponse<FetchPartnerManufacturersResponse>;
+  return json.data;
+};
