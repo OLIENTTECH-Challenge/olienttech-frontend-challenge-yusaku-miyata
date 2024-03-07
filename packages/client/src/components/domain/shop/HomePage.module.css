@@ -1,0 +1,19 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.linkList {
+  display: flex;
+  gap: var(--spacing-md);
+  justify-content: center;
+}
+
+.linkCard {
+  width: 100%;
+}
+
+.logoutButton {
+  margin-top: 12px;
+}

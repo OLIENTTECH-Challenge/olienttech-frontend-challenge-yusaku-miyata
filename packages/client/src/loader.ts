@@ -28,3 +28,30 @@ export const manufacturerAuthLoader: LoaderFunction = async () => {
     return redirect('/manufacturer/login');
   }
 };
+
+export const shopAuthLoader: LoaderFunction = async () => {
+  const token = document.cookie
+    .split('; ')
+    .find((row) => row.startsWith('token'))
+    ?.split('=')[1];
+
+  if (token === undefined) {
+    return redirect('/shop/login');
+  }
+
+  try {
+    const { id, role } = await api.verify(token);
+
+    if (role !== Role.Shop) {
+      return redirect('/shop/login');
+    }
+
+    return {
+      id,
+      role,
+      token,
+    };
+  } catch {
+    return redirect('/shop/login');
+  }
+};
