@@ -2,6 +2,7 @@ import { Column, Table } from '@/components/case/Table';
 import { useEffect, useState } from 'react';
 import * as shopApi from '@/api/shop';
 import { useAuthLoaderData } from '@/hooks/useAuthLoaderData';
+import { useNavigate } from 'react-router-dom';
 
 type Response = Awaited<ReturnType<typeof shopApi.fetchPartnerManufacturers>>;
 
@@ -22,6 +23,7 @@ const usePartnerManufacturers = () => {
 };
 
 export const ManufacturerListPage = () => {
+  const navigate = useNavigate();
   const { manufacturers } = usePartnerManufacturers();
 
   const columns: Column<Response[number]>[] = [
@@ -39,5 +41,13 @@ export const ManufacturerListPage = () => {
     },
   ];
 
-  return <Table columns={columns} data={manufacturers} />;
+  return (
+    <Table
+      columns={columns}
+      data={manufacturers}
+      onClick={(item) => {
+        navigate(`/shop/manufacturers/${item.id}/products`);
+      }}
+    />
+  );
 };
