@@ -6,8 +6,10 @@ import { Breadcrumb } from '@/components/case/Breadcrumb';
 
 export const ShopLayout = () => {
   const location = useLocation();
-  const isLoginPage = location.pathname.includes('login');
-  const isManufacturerListPage = location.pathname.includes('shop/manufacturers');
+  const isLoginPage = location.pathname == '/shop/login';
+  const isManufacturerListPage = location.pathname == '/shop/manufacturers';
+  const isManufacturerProductListPage =
+    location.pathname.includes('/shop/manufacturers') && location.pathname.includes('products');
 
   let breadcrumbItems = [{ href: '/shop', title: '販売会社トップ' }];
   if (isLoginPage) {
@@ -15,6 +17,13 @@ export const ShopLayout = () => {
   }
   if (isManufacturerListPage) {
     breadcrumbItems = [...breadcrumbItems, { href: '/shop/manufacturers', title: '製造会社一覧' }];
+  }
+  if (isManufacturerProductListPage) {
+    breadcrumbItems = [
+      ...breadcrumbItems,
+      { href: '/shop/manufacturers', title: '製造会社一覧' },
+      { href: location.pathname, title: '取扱商品一覧' },
+    ];
   }
 
   return (
