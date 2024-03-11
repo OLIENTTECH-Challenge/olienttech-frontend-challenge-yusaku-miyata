@@ -1,4 +1,6 @@
 import { Column, Table } from '@/components/case/Table';
+import { TextInput } from '@/components/base/TextInput';
+import styles from './ManufacturerProductListPage.module.css';
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import * as shopApi from '@/api/shop';
@@ -64,6 +66,21 @@ export const ManufacturerProductListPage = () => {
       header: '在庫',
       accessor: (item) => item.stock,
     },
+    {
+      header: '発注',
+      accessor: (item) => (
+        <div className={styles.orderCell}>
+          <TextInput
+            type='number'
+            min={0}
+            name={`order_${item.id}`}
+            className={styles.orderInput}
+            defaultValue={0}
+            required
+          />
+        </div>
+      ),
+    },
   ];
 
   useEffect(() => {
@@ -87,6 +104,8 @@ export const ManufacturerProductListPage = () => {
       <p>読み込み中...</p>
     </>
   ) : (
-    <Table columns={columns} data={items} />
+    <form>
+      <Table columns={columns} data={items} />
+    </form>
   );
 };
