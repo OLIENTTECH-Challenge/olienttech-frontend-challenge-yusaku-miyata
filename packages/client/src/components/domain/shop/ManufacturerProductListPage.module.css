@@ -6,3 +6,9 @@
 .orderInput {
   width: 60px;
 }
+
+.modalButton {
+  display: flex;
+  justify-content: flex-end;
+  margin: 12px 0;
+}
