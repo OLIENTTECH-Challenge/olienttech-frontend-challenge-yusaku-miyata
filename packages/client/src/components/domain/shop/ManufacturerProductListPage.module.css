@@ -1,0 +1,8 @@
+.orderCell {
+  display: flex;
+  gap: var(--spacing-md);
+}
+
+.orderInput {
+  width: 60px;
+}
