@@ -10,6 +10,7 @@ export const ShopLayout = () => {
   const isManufacturerListPage = location.pathname == '/shop/manufacturers';
   const isManufacturerProductListPage =
     location.pathname.includes('/shop/manufacturers') && location.pathname.includes('products');
+  const isOrderListPage = location.pathname == '/shop/orders';
 
   let breadcrumbItems = [{ href: '/shop', title: '販売会社トップ' }];
   if (isLoginPage) {
@@ -24,6 +25,9 @@ export const ShopLayout = () => {
       { href: '/shop/manufacturers', title: '製造会社一覧' },
       { href: location.pathname, title: '取扱商品一覧' },
     ];
+  }
+  if (isOrderListPage) {
+    breadcrumbItems = [...breadcrumbItems, { href: '/shop/orders', title: '注文書一覧' }];
   }
 
   return (

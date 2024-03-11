@@ -52,6 +52,12 @@ export const ShopHomePage = () => {
             href='/shop/manufacturers'
             className={styles.linkCard}
           />
+          <LinkCard
+            title='注文書一覧'
+            description='製造会社への注文書を管理します'
+            href='/shop/orders'
+            className={styles.linkCard}
+          />
         </div>
       </div>
     </>
