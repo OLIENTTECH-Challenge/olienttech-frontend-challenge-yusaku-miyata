@@ -1,1 +1,1 @@
-{"version":3,"sources":["./ManufacturerProductListPage.module.css"],"names":["orderCell","orderInput"],"mappings":"AAAA;AAAA,E,aAAAA,W,WAAA;AAAA,E,aAKAC,Y,WALA;AAAA;AAAA","file":"ManufacturerProductListPage.module.css.d.ts","sourceRoot":""}
+{"version":3,"sources":["./ManufacturerProductListPage.module.css"],"names":["orderCell","orderInput","modalButton"],"mappings":"AAAA;AAAA,E,aAAAA,W,WAAA;AAAA,E,aAKAC,Y,WALA;AAAA,E,aASAC,a,WATA;AAAA;AAAA","file":"ManufacturerProductListPage.module.css.d.ts","sourceRoot":""}

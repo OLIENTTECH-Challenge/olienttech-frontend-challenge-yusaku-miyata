@@ -1,0 +1,24 @@
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: var(--z-index-popup);
+  width: 100%;
+  max-width: 1200px;
+  max-height: 80%;
+  padding: var(--spacing-lg);
+  overflow: auto;
+  background-color: var(--modal);
+  transform: translate(-50%, -50%);
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-index-overlay);
+  background-color: var(--overlay);
+}
+
+.modalButton {
+  margin: 12px 0;
+}
