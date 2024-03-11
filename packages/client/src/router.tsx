@@ -12,6 +12,7 @@ import ShopLayout from './pages/shop/layout';
 import ShopLoginPage from './pages/shop/login';
 import ShopManufacturerListPage from './pages/shop/manufacturers';
 import ShopManufacturerProductListPage from './pages/shop/manufacturer-products';
+import ShopOrderListPage from './pages/shop/orders';
 
 const router = createBrowserRouter([
   {
@@ -39,6 +40,7 @@ const router = createBrowserRouter([
         element: <ShopManufacturerProductListPage />,
         loader: shopAuthLoader,
       },
+      { path: '/shop/orders', element: <ShopOrderListPage />, loader: shopAuthLoader },
     ],
   },
 ]);
