@@ -19,6 +19,17 @@
   background-color: var(--overlay);
 }
 
-.modalButton {
-  margin: 12px 0;
+.modalHeader {
+  margin: var(--spacing-lg) 0;
+  font-size: large;
+}
+
+.modalBody {
+  margin: var(--spacing-lg) 0;
+}
+
+.modalFooter {
+  display: flex;
+  justify-content: space-between;
+  margin: var(--spacing-lg) 0;
 }

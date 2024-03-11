@@ -130,3 +130,37 @@ export const fetchHandlingProducts = async (
   const json = (await res.json()) as SuccessResponse<FetchHandlingProductsResponse>;
   return json.data;
 };
+
+type postOrderRequest = {
+  manufacturerId: string;
+  items: {
+    productId: string;
+    quantity: number;
+  }[];
+  shopId: string;
+  token: string;
+};
+
+export const postOrder = async (req: postOrderRequest) => {
+  const { manufacturerId, items, shopId, token } = req;
+
+  const res = await fetch(`${APP_API_URL}/shops/${shopId}/orders`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      manufacturerId,
+      items,
+    }),
+  });
+
+  await new Promise((resolve) => setTimeout(resolve, 2000)); // NOTE: トーストの挙動を試すために, わざと処理待ちしている
+
+  if (!res.ok) {
+    throw new Error();
+  }
+  const json = (await res.json()) as SuccessResponse<{ data: object }>;
+  return json.data;
+};

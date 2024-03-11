@@ -1,5 +1,6 @@
 declare const styles:
   & Readonly<{ "button": string }>
+   
   & Readonly<{ "outlined": string }>
   & Readonly<{ "filled": string }>
   & Readonly<{ "loading": string }>
