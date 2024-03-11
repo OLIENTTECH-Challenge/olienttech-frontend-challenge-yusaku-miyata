@@ -7,6 +7,7 @@ import toast from 'react-hot-toast';
 import * as manufacturerApi from '@/api/manufacturer';
 import { useAuthLoaderData } from '@/hooks/useAuthLoaderData';
 import { Button } from '@/components/base/Button';
+import { formatMoney } from '@/libs/utils';
 
 type Response = Awaited<ReturnType<typeof manufacturerApi.fetchHandlingProducts>>;
 
@@ -97,7 +98,7 @@ export const ProductListPage = () => {
     },
     {
       header: '単価',
-      accessor: (item) => <p className={styles.priceCell}>{`${item.price}円`}</p>,
+      accessor: (item) => <p className={styles.priceCell}>{`${formatMoney(item.price)}円`}</p>,
     },
     {
       header: '在庫',
