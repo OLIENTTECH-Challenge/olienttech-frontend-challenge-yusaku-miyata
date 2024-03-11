@@ -4,6 +4,7 @@ import * as manufacturerApi from '@/api/manufacturer';
 import { Column, Table } from '@/components/case/Table';
 import { useParams } from 'react-router-dom';
 import styles from './OrderPage.module.css';
+import { formatMoney } from '@/libs/utils';
 
 type Response = Awaited<ReturnType<typeof manufacturerApi.fetchOrder>>;
 
@@ -54,7 +55,7 @@ export const OrderPage = () => {
     },
     {
       header: '単価',
-      accessor: (item) => <p className={styles.priceCell}>{item.price}円</p>,
+      accessor: (item) => <p className={styles.priceCell}>{`${formatMoney(item.price)}円`}</p>,
     },
   ];
 
@@ -67,7 +68,7 @@ export const OrderPage = () => {
       <div>
         <p>発注元: {order.shop.name}</p>
         <p>発注日: {order.orderAt}</p>
-        <p>発注金額: {order.totalPrice}円</p>
+        <p>発注金額: {formatMoney(order.totalPrice)}円</p>
       </div>
       <Table columns={columns} data={items} />
     </div>
