@@ -1,1 +1,1 @@
-{"version":3,"sources":["./Modal.module.css"],"names":["modal","overlay","modalButton"],"mappings":"AAAA;AAAA,E,aAAAA,O,WAAA;AAAA,E,aAcAC,S,WAdA;AAAA,E,aAqBAC,a,WArBA;AAAA;AAAA","file":"Modal.module.css.d.ts","sourceRoot":""}
+{"version":3,"sources":["./Modal.module.css"],"names":["modal","overlay","modalHeader","modalBody","modalFooter"],"mappings":"AAAA;AAAA,E,aAAAA,O,WAAA;AAAA,E,aAcAC,S,WAdA;AAAA,E,aAqBAC,a,WArBA;AAAA,E,aA0BAC,W,WA1BA;AAAA,E,aA8BAC,a,WA9BA;AAAA;AAAA","file":"Modal.module.css.d.ts","sourceRoot":""}
