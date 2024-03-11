@@ -164,3 +164,37 @@ export const postOrder = async (req: postOrderRequest) => {
   const json = (await res.json()) as SuccessResponse<{ data: object }>;
   return json.data;
 };
+
+type FetchOrdersRequest = {
+  shopId: string;
+  token: string;
+};
+
+type FetchOrdersResponse = {
+  id: string;
+  manufacturer: {
+    id: string;
+    name: string;
+    description: string;
+  };
+  approved: boolean;
+  orderAt: string;
+}[];
+
+export const fetchOrders = async (req: FetchOrdersRequest): Promise<FetchOrdersResponse> => {
+  const { shopId, token } = req;
+
+  const res = await fetch(`${APP_API_URL}/shops/${shopId}/orders`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!res.ok) {
+    throw new Error();
+  }
+  const json = (await res.json()) as SuccessResponse<FetchOrdersResponse>;
+  return json.data;
+};
