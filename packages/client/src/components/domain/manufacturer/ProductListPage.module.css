@@ -10,3 +10,7 @@
 .priceCell {
   white-space: nowrap;
 }
+
+.lowStock {
+  background: var(--caution-background);
+}
