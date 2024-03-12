@@ -1,5 +1,5 @@
 import { TextInput } from '@/components/base/TextInput';
-import { Column, Table } from '@/components/case/Table';
+import { Column, RowStyleCondition, Table } from '@/components/case/Table';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import styles from './ProductListPage.module.css';
 import { Check } from 'lucide-react';
@@ -32,6 +32,12 @@ const useHandleProducts = () => {
   );
 
   return { products, mutateUpdateStock };
+};
+
+const lowStockThreshold = 5;
+const lowStockContition: RowStyleCondition<Response[number]> = {
+  condition: (item) => item.stock <= lowStockThreshold,
+  className: styles.lowStock,
 };
 
 export const ProductListPage = () => {
@@ -122,7 +128,7 @@ export const ProductListPage = () => {
 
   return (
     <form onSubmit={handleSubmit} onKeyDown={handleKeyDown}>
-      <Table columns={columns} data={products} />
+      <Table columns={columns} data={products} rowStyleCondition={lowStockContition} />
     </form>
   );
 };
