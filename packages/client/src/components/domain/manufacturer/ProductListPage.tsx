@@ -2,7 +2,7 @@ import { TextInput } from '@/components/base/TextInput';
 import { Column, RowStyleCondition, Table } from '@/components/case/Table';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import styles from './ProductListPage.module.css';
-import { Check } from 'lucide-react';
+import { Check, Search } from 'lucide-react';
 import toast from 'react-hot-toast';
 import * as manufacturerApi from '@/api/manufacturer';
 import { useAuthLoaderData } from '@/hooks/useAuthLoaderData';
@@ -34,6 +34,29 @@ const useHandleProducts = () => {
   return { products, mutateUpdateStock };
 };
 
+const useFilterProducts = (products: Response) => {
+  const [searchInput, setSearchInput] = useState('');
+  const debouncedSearchTerm = useRef('');
+  const [filteredProducts, setFilteredProducts] = useState(products);
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      debouncedSearchTerm.current = searchInput;
+      setFilteredProducts(products.filter((product) => product.name.startsWith(debouncedSearchTerm.current)));
+    }, 500);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [searchInput, products]);
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchInput(e.target.value);
+  };
+
+  return { filteredProducts, handleSearchChange };
+};
+
 const lowStockThreshold = 5;
 const lowStockContition: RowStyleCondition<Response[number]> = {
   condition: (item) => item.stock <= lowStockThreshold,
@@ -44,6 +67,7 @@ export const ProductListPage = () => {
   const targetProductId = useRef<string | null>(null);
 
   const { products, mutateUpdateStock } = useHandleProducts();
+  const { filteredProducts, handleSearchChange } = useFilterProducts(products);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -127,8 +151,14 @@ export const ProductListPage = () => {
   ];
 
   return (
-    <form onSubmit={handleSubmit} onKeyDown={handleKeyDown}>
-      <Table columns={columns} data={products} rowStyleCondition={lowStockContition} />
-    </form>
+    <>
+      <div className={styles.search}>
+        <Search size={24} className={styles.searchIcon} />
+        <TextInput name='searchInput' onChange={handleSearchChange} placeholder='商品名で検索' />
+      </div>
+      <form onSubmit={handleSubmit} onKeyDown={handleKeyDown}>
+        <Table columns={columns} data={filteredProducts} rowStyleCondition={lowStockContition} />
+      </form>
+    </>
   );
 };

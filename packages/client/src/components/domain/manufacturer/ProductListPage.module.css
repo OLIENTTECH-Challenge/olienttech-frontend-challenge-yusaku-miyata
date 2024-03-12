@@ -14,3 +14,12 @@
 .lowStock {
   background: var(--caution-background);
 }
+
+.search {
+  display: flex;
+  align-items: center;
+}
+
+.searchIcon {
+  margin-right: var(--spacing-md);
+}
