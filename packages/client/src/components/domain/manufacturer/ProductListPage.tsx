@@ -142,6 +142,11 @@ export const ProductListPage = () => {
       width: '5%',
     },
     {
+      header: '発注数',
+      accessor: (item) => item.orderQuantity,
+      width: '5%',
+    },
+    {
       header: '在庫',
       accessor: (item) => (
         <div className={styles.stockCell}>

@@ -207,6 +207,7 @@ app.openapi(
                   ),
                   stock: z.number(),
                   price: z.number(),
+                  orderQuantity: z.number(),
                 }),
               ),
             ),
@@ -242,6 +243,11 @@ app.openapi(
             },
           },
         },
+        orders: {
+          include: {
+            items: true,
+          },
+        },
       },
     });
 
@@ -259,9 +265,30 @@ app.openapi(
       })),
       price,
       stock,
+      orderQuantity: 0,
     }));
 
-    return c.jsonT(AppResponse.success(handlingProducts));
+    const getOrder = manufacturer.orders.flatMap(({ items }) =>
+      items.map(({ productId, quantity }) => ({ productId, quantity })),
+    );
+
+    const orderQuantityMap: Record<string, number> = getOrder.reduce(
+      (acc: Record<string, number>, { productId, quantity }) => {
+        acc[productId] = (acc[productId] || 0) + quantity;
+        return acc;
+      },
+      {},
+    );
+
+    const updatedHandlingProducts = handlingProducts.map((product) => {
+      const orderQuantity = orderQuantityMap[product.id] || 0;
+      return {
+        ...product,
+        orderQuantity,
+      };
+    });
+
+    return c.jsonT(AppResponse.success(updatedHandlingProducts));
   },
 );
 
