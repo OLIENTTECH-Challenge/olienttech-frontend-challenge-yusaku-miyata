@@ -76,6 +76,7 @@ type FetchHandlingProductsResponse = {
   categories: { id: string; name: string }[];
   price: number;
   stock: number;
+  orderQuantity: number;
 }[];
 
 export const fetchHandlingProducts = async (
