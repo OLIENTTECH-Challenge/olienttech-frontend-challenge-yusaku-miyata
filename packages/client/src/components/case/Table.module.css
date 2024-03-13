@@ -30,3 +30,22 @@
   padding: 16px;
   border: 1px solid var(--border);
 }
+
+.skeleton {
+  background-color: var(--skeleton);
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0% {
+    background-color: var(--skeleton);
+  }
+
+  50% {
+    background-color: var(--skeleton-pulse);
+  }
+
+  100% {
+    background-color: var(--skeleton);
+  }
+}
