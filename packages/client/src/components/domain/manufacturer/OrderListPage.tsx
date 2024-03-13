@@ -14,36 +14,46 @@ const useOrder = () => {
   const token = loaderData.token;
 
   const [orders, setOrders] = useState<Response>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    void manufacturerApi.fetchOrders({ manufacturerId, token }).then((products) => {
-      setOrders(products);
-    });
+    void manufacturerApi
+      .fetchOrders({ manufacturerId, token })
+      .then((products) => {
+        setOrders(products);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, [manufacturerId, token]);
 
-  return { orders };
+  return { orders, isLoading };
 };
 
 export const OrderListPage = () => {
   const navigate = useNavigate();
-  const { orders } = useOrder();
+  const { orders, isLoading } = useOrder();
 
   const columns: Column<Response[number]>[] = [
     {
       header: '発注書ID',
       accessor: (item) => item.id,
+      width: '35%',
     },
     {
       header: '発注元',
       accessor: (item) => item.shop.name,
+      width: '30%',
     },
     {
       header: '発注金額',
       accessor: (item) => <p className={styles.priceCell}>{`${formatMoney(item.totalPrice)}円`}</p>,
+      width: '15%',
     },
     {
       header: '発注日',
       accessor: (item) => formatDate(item.orderAt),
+      width: '20%',
     },
   ];
 
@@ -54,6 +64,7 @@ export const OrderListPage = () => {
       onClick={(item) => {
         navigate(`/manufacturer/orders/${item.id}`);
       }}
+      isLoading={isLoading}
     />
   );
 };

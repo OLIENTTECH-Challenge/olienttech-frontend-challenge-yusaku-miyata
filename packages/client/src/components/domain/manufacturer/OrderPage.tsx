@@ -14,14 +14,20 @@ const useOrder = (orderId: string) => {
   const token = loaderData.token;
 
   const [order, setOrders] = useState<Response | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    void manufacturerApi.fetchOrder({ manufacturerId, orderId, token }).then((orders) => {
-      setOrders(orders);
-    });
+    void manufacturerApi
+      .fetchOrder({ manufacturerId, orderId, token })
+      .then((orders) => {
+        setOrders(orders);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, [manufacturerId, orderId, token]);
 
-  return { order };
+  return { order, isLoading };
 };
 
 export const OrderPage = () => {
@@ -29,33 +35,39 @@ export const OrderPage = () => {
   const orderId = params['orderId'];
 
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const { order } = useOrder(orderId!);
+  const { order, isLoading } = useOrder(orderId!);
   const items = order?.items ?? [];
 
   const columns: Column<(typeof items)[number]>[] = [
     {
       header: '商品ID',
       accessor: (item) => item.product.id,
+      width: '30%',
     },
     {
       header: '商品名',
       accessor: (item) => item.product.name,
+      width: '15%',
     },
     {
       header: '商品説明',
       accessor: (item) => item.product.description,
+      width: '35%',
     },
     {
       header: '在庫数',
       accessor: (item) => item.stock,
+      width: '5%',
     },
     {
       header: '発注数',
       accessor: (item) => item.quantity,
+      width: '5%',
     },
     {
       header: '単価',
       accessor: (item) => <p className={styles.priceCell}>{`${formatMoney(item.price)}円`}</p>,
+      width: '10%',
     },
   ];
 
@@ -70,7 +82,7 @@ export const OrderPage = () => {
         <p>発注日: {formatDate(order.orderAt)}</p>
         <p>発注金額: {formatMoney(order.totalPrice)}円</p>
       </div>
-      <Table columns={columns} data={items} />
+      <Table columns={columns} data={items} isLoading={isLoading} />
     </div>
   );
 };
