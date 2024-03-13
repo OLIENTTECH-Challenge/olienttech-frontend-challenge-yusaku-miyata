@@ -17,11 +17,17 @@ const useHandleProducts = () => {
   const token = loaderData.token;
 
   const [products, setProducts] = useState<Response>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    void manufacturerApi.fetchHandlingProducts({ manufacturerId, token }).then((products) => {
-      setProducts(products);
-    });
+    void manufacturerApi
+      .fetchHandlingProducts({ manufacturerId, token })
+      .then((products) => {
+        setProducts(products);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, [manufacturerId, token]);
 
   const mutateUpdateStock = useCallback(
@@ -31,7 +37,7 @@ const useHandleProducts = () => {
     [manufacturerId, token],
   );
 
-  return { products, mutateUpdateStock };
+  return { products, mutateUpdateStock, isLoading };
 };
 
 const useFilterProducts = (products: Response) => {
@@ -66,7 +72,7 @@ const lowStockContition: RowStyleCondition<Response[number]> = {
 export const ProductListPage = () => {
   const targetProductId = useRef<string | null>(null);
 
-  const { products, mutateUpdateStock } = useHandleProducts();
+  const { products, mutateUpdateStock, isLoading } = useHandleProducts();
   const { filteredProducts, handleSearchChange } = useFilterProducts(products);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -113,22 +119,27 @@ export const ProductListPage = () => {
     {
       header: 'ID',
       accessor: (item) => item.id,
+      width: '25%',
     },
     {
       header: '商品名',
       accessor: (item) => item.name,
+      width: '20%',
     },
     {
       header: '商品説明',
       accessor: (item) => item.description,
+      width: '30%',
     },
     {
       header: '商品カテゴリ',
       accessor: (item) => item.categories.map((category) => category.name).join('・'),
+      width: '15%',
     },
     {
       header: '単価',
       accessor: (item) => <p className={styles.priceCell}>{`${formatMoney(item.price)}円`}</p>,
+      width: '5%',
     },
     {
       header: '在庫',
@@ -147,6 +158,7 @@ export const ProductListPage = () => {
           </Button>
         </div>
       ),
+      width: '5%',
     },
   ];
 
@@ -157,7 +169,7 @@ export const ProductListPage = () => {
         <TextInput name='searchInput' onChange={handleSearchChange} placeholder='商品名で検索' />
       </div>
       <form onSubmit={handleSubmit} onKeyDown={handleKeyDown}>
-        <Table columns={columns} data={filteredProducts} rowStyleCondition={lowStockContition} />
+        <Table columns={columns} data={filteredProducts} isLoading={isLoading} rowStyleCondition={lowStockContition} />
       </form>
     </>
   );
